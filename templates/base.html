@@ -1,0 +1,60 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django + Tailwind CSS + Flowbite</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+</head>
+
+<body class="bg-green-50 flex flex-col min-h-screen">
+    <header>
+        <nav
+            class="flex flex-col  p-3 sm:bg-purple-700 bg-purple-600 text-white w-full sm:flex sm:flex-row sm:items-center sm:justify-center sm:p-5 sm:space-x-5 sm:text-1xl md:flex md:text-2xl md:justify-center xl:flex xl:justify-between font-mono  xsm:bg-rose-500 ">
+            <div class="flex items-center justify-center my-4 sm:my-0 sm:flex md:flex md:my-0 md:ml-[10vw]">
+                <i class="fa-sharp fa-solid fa-cart-shopping fa-lg"></i>
+            </div>
+            <ul
+                class="flex flex-col items-center space-y-2 sm:flex sm:space-y-0 sm:flex-row sm:space-x-5 sm:mr-[10vw] md:flex md:space-y-0 xl:space-y-0 xl:flex xl:w-[51%] xl:space-x-11">
+                <li><a href="{% url 'feedback' %}" class="hover:no-underline text-white">Contactus</a></li>
+                <li><a href="/" class="hover:no-underline text-white">Home</a></li>
+                <li><a href="{% url 'Yourblogs'%}" class="hover:no-underline text-white">YourBlogs</a></li>
+                <li><a href="{% url 'addblog' %}" class="hover:no-underline text-white">Add</a></li>
+                {% if request.user.is_authenticated %}
+                <li class="hover:no-underline text-white">
+                    <a href="{% url 'logout' %}">Logout</a>
+                </li>
+                {% endif %}
+
+            </ul>
+
+        </nav>
+    </header>
+
+    {% block content %}
+    {% endblock content %}
+    <footer class="mt-auto w-full">
+        <div class=" p-6 text-center text-black dark:bg-neutral-700 font-mono bg-blue-700 ">
+            <span>© 2023 Copyright:</span>
+            <a class="font-semibold ">All rights reserved</a>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

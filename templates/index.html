@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load tailwind_filters %}
+{% block title %}
+{% endblock %}
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-warning {{ message.tags }} alert-dismissible fade show" role="alert">
+  <strong>{{ message }}</strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+{% endif %}
+<div class="container flex flex-col my-5">
+    <div class="flex justify-center">
+      <h1 class="text-3xl overflow-hidden hidden sm:block whitespace-nowrap animate-typing">All blogs are here</h1>
+    </div>
+      <div class="md:grid-style lg:grid lg:grid-cols-4 flex flex-col items-center">
+        {% for blog in blogs %}
+        <div class="card m-4 bg-blue-300 rounded-3xl box-border p-3 border-solid border-orange-700" style="width: 18rem;">
+          <h4 class="card-title text-center mt-3">Product Name</h4>
+          <div style="font-size: 10vh;" class="text-center"><span><i class="fa-brands fa-product-hunt"></i></span>
+          </div>
+          <h5 class="text-center">{{ blog.title }}</h5>
+          <button class="btn mt-3 bg-rose-500"   onclick="window.location=`{% url 'detail' blog.id %}`">details</button>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+{% endblock content %}

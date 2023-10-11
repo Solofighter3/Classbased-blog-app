@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load tailwind_filters %}
+{% load crispy_forms_tags %}
+{% block title %}{{blog.title}}{% endblock %}
+{% block content %}
+<div class="flex flex-col items-center  mt-5 bg-red-500 box-border font-mono rounded-3xl">
+    <img src="{{ object.image.url }}" alt="Image" class="mt-10">
+    <br>
+    <h1 class="font-bold my-5">{{blog.title}} by {{blog.user}}</h1> <br>
+    {{blog.content|safe|linebreaksbr}}
+    <hr>
+    <h3 class="mt-4">Created at {{blog.created_first}}</h3>
+</div>
+{% if blog.user == request.user %}
+<div class="flex flex-col space-y-5 mt-5 container">
+    <button class="btn w-full" onclick="window.location=`{% url 'delete' blog.id %}`">Delete Blog</button>
+    <button class="btn  w-full bg-lime-400" onclick="window.location=`{% url 'update' blog.id %}`">Update Blog</button>
+</div>
+{% endif %}
+
+{% if user.is_authenticated %}
+<div class="flex justify-center">
+    <div class="sm:w-[50vw] mt-6 mx-4 lg:mx-auto p-4 bg-white rounded-xl sm:mb-4 w-full">
+        <form method="POST" id="main_form" class="comment_form flex w-full" action="">
+            {% csrf_token %}
+                {{ comment_form.content }}
+            <button class="px-5 btn" type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+{% else %} <h2>You need to Login to comment</h2>
+{% endif %}
+<div class="container  bg-green-300 flex-col justify-center font-mono border box-border rounded-lg mb-10 h-[20vh] overflow-scroll">
+    <div class="flex flex-col justify-center scroll-m-6" >
+        {% for comment in comments %}
+        {% if comment.is_parent %}
+        <h3> <b>{{ comment.author }} : </b> {{ comment.content }}</h3>
+        &nbsp; &nbsp; &nbsp;
+        <form action="" method="POST" id="main_form" class="comment_form">
+            <div>
+                <label for="comment">Reply here</label>
+                <input type="text" name="content"> <input type="hidden" value="{{ comment.pk }}" name="parent"> {% csrf_token %} <input type="submit" value="Post">
+            </div>
+
+        </form>
+        {% endif %}
+
+        {% for replies in comment.children %}
+        <h3>&nbsp; &nbsp; &nbsp; <b>{{ comment.author }} : </b> {{ replies.content }}</h3>
+        {% endfor %}
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load tailwind_filters %}
+{% block content %}
+<div class="container my-[10rem] bg-green-300 rounded-3xl flex justify-center mx-auto w-[25rem] box-border">
+  <form method="post" class="p-4">
+    <legend class="text-center mt-2">Signup</legend>
+    <fieldset>
+        {% csrf_token %}
+        
+        {{ form|crispy }}
+        <div class="flex justify-center">
+          <button type="submit" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Submit</button>
+        </div>
+        
+    </fieldset>
+  </form>
+</div>
+
+
+{% endblock content %}
